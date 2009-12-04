@@ -1,5 +1,5 @@
- * [Tutorial]
-    * [Tutorial 1: Basic SmartModel]
+[Tutorial]
+   [Tutorial 1: Basic SmartModel]
 
 #summary Defining a Model Class
 
