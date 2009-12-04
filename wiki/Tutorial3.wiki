@@ -1,0 +1,26 @@
+#summary Reading Contents from table, read() function
+
+= Reading or SQL Select =
+
+ere the test database table and model we had written in Tutorial1
+
+{{{
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint NOT NULL auto_increment,
+  `username` varchar(255) NOT NULL,
+  `usertype` integer unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+);
+}}}
+
+
+{{{
+class User extends SmartModel {
+public $id;
+public $username;
+public $usertype;
+
+public $_table = "users";
+public $_fields = array('id','username','usertype');
+}
+}}}
