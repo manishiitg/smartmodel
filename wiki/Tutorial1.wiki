@@ -1,5 +1,4 @@
-[Tutorial]
-   [Tutorial 1: Basic SmartModel]
+#sidebar TOCArticles
 
 #summary Defining a Model Class
 
