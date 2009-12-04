@@ -35,7 +35,7 @@ $user->read();
 
 This will product the SQL
 
-Query Exec: SELECT * FROM `users`
+Query Exec:  SELECT `*` FROM ``users``
 
 
 ==== SELECT * with WHERE CLAUSE ====
@@ -55,7 +55,7 @@ $user->read();
 }}}
 
 *SQL Output:*
-Query Exec: SELECT * FROM `users` where users.username='Test'
+Query Exec: SELECT `*` FROM `users` where users.username='Test' 
 Row Affected : 1
 
 *Explanation:*
@@ -73,7 +73,7 @@ $user->read();
 }}}
 
 *SQL Output:*
-Query Exec: SELECT * FROM `users` where users.id='1' AND users.username='Test' 
+Query Exec: SELECT `*` FROM `users` where users.id='1' AND users.username='Test' 
 
 Another way of using the read function is
 
@@ -87,7 +87,7 @@ $user->read(null,$where);
 }}}
 
 *SQL Output:*
-Query Exec: SELECT * FROM `users` where users.id='1' AND users.username='Test' 
+Query Exec: SELECT `*` FROM `users` where users.id='1' AND users.username='Test' 
 
 In this variation we are explicitly passing a where clause as associate array. In this case the Model class, wont check which member variables of the set. It just use the where array passed. _Its important to note that the key of the associative array should be same as the variable name of the class. It should not be same as the database column name_
 
@@ -120,7 +120,7 @@ $user->read(null,null,$order);
 }}}
 
 *SQL Output:*
-Query Exec: SELECT * FROM `users` ORDER BY username ASC 
+Query Exec: SELECT `*` FROM `users` ORDER BY username ASC 
 
 Multiple Order By can also be done
 
@@ -144,7 +144,7 @@ $user->read(null,null,null,'LIMIT 1,2');
 }}}
 
 *SQL Output:*
-Query Exec: SELECT * FROM `users` LIMIT 1,2
+Query Exec: SELECT `*` FROM ``users`` LIMIT 1,2
 
 === smartRead() function ====
 
