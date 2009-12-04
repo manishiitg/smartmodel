@@ -1,6 +1,6 @@
 #summary Insert Function: saving a model to database
 
-= The Insert Fuction =
+= The Insert Fuction OR SQL INSERT =
 
 Here the test database table and model we had written in Tutorial1
 
