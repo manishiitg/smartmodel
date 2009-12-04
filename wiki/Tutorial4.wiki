@@ -1,0 +1,87 @@
+#summary Using Data from read()
+
+= Introduction =
+
+{{{
+$user = new User();
+$data = $user->read();
+}}}
+
+The $data is an associative array format is
+
+$data[0] -> $row1
+$data[1] -> $row2
+$data[2] -> $row3
+
+where $row1 is again an associative array like
+
+$row1['columnName'] -> value in table
+
+=== Smart Assign Function ===
+
+Now one frequently used task is to extract data from the table and display it.
+A very quick way to do this is
+
+{{{
+$user = new User();
+$data = $user->read();
+foreach($data as $row){
+ $user->smartAssign($row); 
+ echo $user;
+}
+}}}
+
+Here the function smartAssign set a the values of all variables in the $user object with $row array. Bascially, it gets the column name $row array, converts it to variable name from the $`_`field array and then sets the value in the object. So, in the current case, all the member variables of the user object are set.
+
+There another new feature in this code i.e {{{ echo $user; }}}. The ability to each a SmartModel class. This echo will properly display the values of each variable of the object. 
+
+So output of the above code is:
+username : manish_iitg
+usertype : 1
+id : 2
+
+
+smartAssign() when passed with no parameter, it reads from the $_REQUEST[] array and assings member variable of the class. This is very useful feature during form submission.
+
+
+
+=== GETTER and SETTER ===
+
+All member variables of SmartModel have getter and settings
+
+meaning
+
+{{{
+$user = new User();
+$data = $user->read();
+foreach($data as $row){
+ $user->smartAssign($row); 
+ echo $user->id.'---'.$user->getID().'---'.$user->getId();
+ echo $user->username.'---'.$user->getUsername().'---'.$user->getUSERname();
+ $user->setUsername('manish');
+}
+}}}
+
+All getters and setters are case insensitive as can be seen in the code. 
+
+$user->getID() returns empty string when id is not set and the values of id when id is set.
+
+
+=== Reset function ===
+
+
+{{{
+$user = new User();
+$data = $user->read();
+foreach($data as $row){
+ $user->smartAssign($row); 
+ echo $user;
+ $user->reset();
+ echo $user;
+}
+}}}
+
+The reset() method removed everything from User Object, which is in the $`_`fields array.
+
+
+
