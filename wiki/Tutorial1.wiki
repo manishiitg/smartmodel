@@ -5,4 +5,24 @@
 This tutorial will show how to define a Model Class and what all options are available.
 
 
-= Details =
+== What is Model ==
+
+Basic understanding of `<a href='http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller'>MVC</a>` is required to understand the concept of Model. Model is used to represent data, and in our case a Database Table. 
+
+== The Model Class ==
+
+The model class is used to represent a database table. 
+
+Lets take an example of a database table for this tutorial
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint NOT NULL auto_increment,
+  `username` varchar(255) NOT NULL,
+  `usertype` integer unsigned NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `block` boolean NOT NULL,
+  `registration` date NOT NULL,
+  PRIMARY KEY  (`id`)
+);
