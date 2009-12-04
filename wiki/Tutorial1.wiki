@@ -1,5 +1,3 @@
-#sidebar TOCArticles
-
 #summary Defining a Model Class
 
 = Introduction =
