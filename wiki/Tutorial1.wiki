@@ -15,6 +15,7 @@ The model class is used to represent a database table.
 
 Lets take an example of a database table for this tutorial
 
+{{{
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint NOT NULL auto_increment,
   `username` varchar(255) NOT NULL,
@@ -26,3 +27,4 @@ CREATE TABLE IF NOT EXISTS `users` (
   `registration` date NOT NULL,
   PRIMARY KEY  (`id`)
 );
+}}}
