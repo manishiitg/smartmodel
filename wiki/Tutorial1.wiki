@@ -1,0 +1,8 @@
+#summary Defining a Model Class
+
+= Introduction =
+
+This tutorial will show how to define a Model Class and what all options are available.
+
+
+= Details =
