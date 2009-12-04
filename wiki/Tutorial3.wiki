@@ -24,3 +24,146 @@ public $_table = "users";
 public $_fields = array('id','username','usertype');
 }
 }}}
+
+
+==== SELECT * ====
+
+{{{
+$user = new User();
+$user->read();
+}}}
+
+This will product the SQL
+
+Query Exec: SELECT * FROM `users`
+
+
+==== SELECT * with WHERE CLAUSE ====
+
+This is the signature of the read function
+
+{{{
+public function read($select = null,$where = null,$orderby = null,$limitsql = "");
+}}}
+
+
+Using the read fuction
+{{{
+$user = new User();
+$user->username = 'Test';
+$user->read();
+}}}
+
+*SQL Output:*
+Query Exec: SELECT * FROM `users` where users.username='Test'
+Row Affected : 1
+
+*Explanation:*
+
+The Model class checks if any member variables of the User Object have been set or not.
+If any values have been set it will put that in the where clause with AND as the operator
+
+So
+
+{{{
+$user = new User();
+$user->username = 'Test';
+$user->id = '1';
+$user->read();
+}}}
+
+*SQL Output:*
+Query Exec: SELECT * FROM `users` where users.id='1' AND users.username='Test' 
+
+Another way of using the read function is
+
+
+
+{{{
+$user = new User();
+$where = array('username'=> 'Test', 'id'=> '1');
+$user->usertype = 1;
+$user->read(null,$where);
+}}}
+
+*SQL Output:*
+Query Exec: SELECT * FROM `users` where users.id='1' AND users.username='Test' 
+
+In this variation we are explicitly passing a where clause as associate array. In this case the Model class, wont check which member variables of the set. It just use the where array passed. _Its important to note that the key of the associative array should be same as the variable name of the class. It should not be same as the database column name_
+
+ 
+
+==== SELECT (column....) with WHERE CLAUSE ====
+
+
+By default read function always does a SELECT * in the SQL Query. But if selecting only few columns is required.
+
+{{{
+$user = new User();
+$select = array('id','username');
+$user->read($select);
+}}}
+
+
+*SQL Output:*
+Query Exec: SELECT users.id,users.username FROM `users` 
+
+You can include a where clause like before in this as well.
+
+==== SELECT with Orderby ====
+
+To do ordering of the result set
+{{{
+$user = new User();
+$order = array('asc'=> 'username');
+$user->read(null,null,$order);
+}}}
+
+*SQL Output:*
+Query Exec: SELECT * FROM `users` ORDER BY username ASC 
+
+Multiple Order By can also be done
+
+{{{
+$user = new User();
+$order = array('asc'=> 'username','desc' => 'id');
+$user->read(null,null,$order);
+}}}
+
+*SQL Output:*
+Query Exec: SELECT * FROM `users` ORDER BY id DESC, username ASC 
+
+
+_But there can be only 1 asc and desc key in the order by array. In multiple asc and desc are passed, only the last one will be used.
+
+==== LIMIT in SELECT ====
+
+{{{
+$user = new User();
+$user->read(null,null,null,'LIMIT 1,2');
+}}}
+
+*SQL Output:*
+Query Exec: SELECT * FROM `users` LIMIT 1,2
+
+=== smartRead() function ====
+
+Now as it can be seen, the read() function has 4 arguments, so if only limit is request, the rest need to set as null explicitly.
+
+smartRead() is just a wrapper function which requires only 1 array
+
+{{{
+$user = new User();
+$opt['where'] = array('username'=>'Test');
+$user->smartRead($opt);
+}}}
+
+This is same as passing the $where array in read() function above
+
+The keys supported by smartRead function are 
+{{{
+$opt['where']
+$opt['select']
+$opt['order']
+$opt['limit']
+}}}
