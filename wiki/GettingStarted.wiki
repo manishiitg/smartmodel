@@ -1,0 +1,37 @@
+#summary Files To Setup Before Getting Started
+
+= Project Setup =
+
+
+These are the required file
+
+Model.php
+SmartModel.php
+Validation.php
+FileUtil.php
+DataDB.php
+config.inc.php
+
+The file config.inc.php contains database access name, username and pass
+
+
+{{{
+	const host = 'localhost';
+	const db = 'testdb';
+	const user = "root";
+	const pass = "root";
+}}}
+
+These four variables are required in config.inc.php
+
+The file DataDB.php contains a method to connect to the database. 
+This library used PHP PDO for database operation, but currently only support MYSQL connection.
+
+
+If you want you can remove the config.inc.php file and supply the correct parameters to DataDB.php. Its very easy use another config as well, as per your project.
+
+Model.php has $sql_tracking=true by default. You need to make it false in case you dont require debugging.
+
+SmartModel.php and Validation.php also have $debug variable to turn debugging on/off
+
+
