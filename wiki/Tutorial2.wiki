@@ -26,6 +26,12 @@ public $_fields = array('id','username','usertype');
 }}}
 
 
+The signature of function is 
+
+{{{public function insert();}}}
+
+This function returns the insert id of the row.
+
 Now to save this model to database is very easy, no SQL queries are required
 
 {{{
