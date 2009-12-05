@@ -34,6 +34,7 @@ The signature of delete function is
 {{{
 public function delete($where = null,$limit="");
 }}}
+This function returns the number of rows deleted
 
 It takes two arguments, first is an associative array which forms the where clause. Second is the SQL Limit, which will tell the rows to delete from result set of where clause.
 
