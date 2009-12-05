@@ -43,7 +43,7 @@ $user->delete();
 }}}
 
 *SQL Output*
-DELETE FROM `users` 
+{{{DELETE FROM `users` }}}
 
 As no where clause was specified all rows where deleted.
 
@@ -56,7 +56,7 @@ $user->delete();
 }}}
 
 *SQL Output*
-DELETE FROM `users`  where `users`.id = 1
+{{{DELETE FROM `users`  where `users`.id = 1}}}
 
 Another Feature
 
@@ -67,7 +67,7 @@ $user->delete($where);
 }}}
 
 *SQL Output*
-DELETE FROM `users`  where users.id = 1
+{{{DELETE FROM `users`  where users.id = 1}}}
 
 
 To provide limit
@@ -79,5 +79,4 @@ $user->delete($where,'LIMIT 1');
 }}}
 
 *SQL Output*
-DELETE FROM `users` WHERE users.id='1' LIMIT 1
-
+{{{DELETE FROM `users` WHERE users.id='1' LIMIT 1}}}
