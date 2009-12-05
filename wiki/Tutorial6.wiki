@@ -32,6 +32,8 @@ public $_fields = array('id','username','usertype');
 The signature of the update function is 
 {{{ public function update($set,$where = null,$opt = null); }}}
 
+This function returns the number of rows updated.
+
 The three arguments are
 $set array, this is an associative array which is used to set the UPDATE in SQL query.
 $where  array, this is an associative array which is used to set the WHERE in SQL query.
