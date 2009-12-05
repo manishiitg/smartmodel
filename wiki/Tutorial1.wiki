@@ -7,7 +7,7 @@ This tutorial will show how to define a Model Class and what all options are ava
 
 == What is Model ==
 
-Basic understanding of `<a href='http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller'>MVC</a>` is required to understand the concept of Model. Model is used to represent data, and in our case a Database Table. 
+Basic understanding of MVC is required to understand the concept of Model. Model is used to represent data, and in our case a Database Table. 
 
 == The SmartModel Class Basic Implementation ==
 
@@ -39,9 +39,9 @@ public $_fields = array('id','username','usertype');
 
 All fields should be public.
 
-`$_table` stores the name of table
+$`_`table stores the name of table
 
-`$_fields` tell the class Model that id, username, usertype are database columns.
+$`_`fields tell the class Model that id, username, usertype are database columns.
 This is required by the User class may have other public variable of its on, which are not part of the database table.
 
 === Additional Feature 1 ===
