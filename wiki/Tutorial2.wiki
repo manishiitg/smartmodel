@@ -35,11 +35,9 @@ $userObj->usertype = 1;
 $id = $userObj->insert();
 }}}
 
-This will be the output (SQLTracking is assumed to be true in all tutorials)
+*SQL Output* (SQLTracking is assumed to be true in all tutorials)
 
 Query Exec: INSERT INTO `users`(`username`,`usertype`) VALUES ('Test','1')
-Row Affected : 1
-Last Insert ID: 1001
 
 
 As you can see, the model got saved in the database. No need to write any sql query.
