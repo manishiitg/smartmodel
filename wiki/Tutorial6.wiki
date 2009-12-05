@@ -1,92 +1,54 @@
-#summary Update Query
+#summary Count Function and SaveOrUpdate
 
-= SQL Update =
+= SQL COUNT =
 
-Here we will see the use SmartModel to fire update queries
+The signature of the function
 
-Here the test database table and model we had written in Tutorial1
+{{{public function count($where = null);}}}
 
-{{{
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint NOT NULL auto_increment,
-  `username` varchar(255) NOT NULL,
-  `usertype` integer unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
-);
-}}}
-
-
-{{{
-class User extends SmartModel {
-public $id;
-public $username;
-public $usertype;
-
-public $_table = "users";
-public $_fields = array('id','username','usertype');
-}
-}}}
-
-== Update Function ==
-
-The signature of the update function is 
-{{{ public function update($set,$where = null,$opt = null); }}}
-
-This function returns the number of rows updated.
-
-The three arguments are
-$set array, this is an associative array which is used to set the UPDATE in SQL query.
-$where  array, this is an associative array which is used to set the WHERE in SQL query.
-$opt array, currently only supports limit
+This function returns an integer, i.e the number of rows counted.
 
 *Usage 1*
 
 {{{
+
 $user = new User();
-$set = array('username' => 'manish','usertype'=>'2');
-$user->update($set);
+$user->username = 'manish';
+$user->count();
+
 }}}
 
 *SQL Output*
-{{{UPDATE `users` SET users.username='manish',users.usertype='2'}}}
+select count(*) from `users` where users.username='manish'
+
 
 *Usage 2*
 
 {{{
+
 $user = new User();
-$set = array('username' => 'manish','usertype'=>'2');
-$where = array('id'=>'1');
-$user->update($set,$where);
+$where = array('username'=>'manish");
+$user->count($where);
+
 }}}
 
 *SQL Output*
-{{{UPDATE `users` SET users.username='manish',users.usertype='2' WHERE users.id='1'}}}
+select count(*) from `users` where users.username='manish'
 
 
-*Usage 3*
+= SAVE OR UPDATE FUNCTION =
+
+The defination of saveOrUpdate function is 
 
 {{{
-$user = new User();
-$user->username = 'manish';
-$where = array('id'=>'1');
-$user->update($set,$where);
+public function saveOrUpdate($where= null){
+		$count = $this->count($where);
+		if($count == 0){
+			$this->insert();
+		}else{
+			$this->update(null,$where);
+		}
+	}
 }}}
 
-*SQL Output*
-{{{UPDATE `users` SET users.username='manish' WHERE users.id='1'}}}
-
-In the update function, if member variables are set the its read by the UPDATE clause and not the where clause. The where clause needs to be passed as array always, or else there wont be any WHERE Clause.
-
-
-== Smart Update ==
-
-A wrapper function for the update function
-Signature is 
-{{{public function smartUpdate($opt);}}}
-
-The array takes the following keys:
-{{{
-$opt['where']
-$opt['update']
-$opt['options']
-}}}
+The code is self explanatory, please see tutorial of count(), insert() and update() before using this.
