@@ -1,0 +1,83 @@
+#summary Delete Database Row
+
+= SQL DELETE =
+
+Here the test database table and model we had written in Tutorial1
+
+{{{
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint NOT NULL auto_increment,
+  `username` varchar(255) NOT NULL,
+  `usertype` integer unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+);
+}}}
+
+
+{{{
+class User extends SmartModel {
+public $id;
+public $username;
+public $usertype;
+
+public $_table = "users";
+public $_fields = array('id','username','usertype');
+}
+}}}
+
+
+
+Now to performs delete operation
+
+The signature of delete function is 
+
+{{{
+public function delete($where = null,$limit="");
+}}}
+
+It takes two arguments, first is an associative array which forms the where clause. Second is the SQL Limit, which will tell the rows to delete from result set of where clause.
+
+{{{
+$user = new User();
+$user->delete();
+}}}
+
+*SQL Output*
+DELETE FROM `users` 
+
+As no where clause was specified all rows where deleted.
+
+
+
+{{{
+$user = new User();
+$user->id = 1;
+$user->delete();
+}}}
+
+*SQL Output*
+DELETE FROM `users`  where `users`.id = 1
+
+Another Feature
+
+{{{
+$user = new User();
+$where = array('id'=>1);
+$user->delete($where);
+}}}
+
+*SQL Output*
+DELETE FROM `users`  where users.id = 1
+
+
+To provide limit
+
+{{{
+$user = new User();
+$where = array('id'=>1);
+$user->delete($where,'LIMIT 1');
+}}}
+
+*SQL Output*
+DELETE FROM `users` WHERE users.id='1' LIMIT 1
+
