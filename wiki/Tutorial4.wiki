@@ -9,15 +9,17 @@ $data = $user->read();
 
 The $data is an associative array format is
 
+{{{
 $data[0] -> $row1
 $data[1] -> $row2
 $data[2] -> $row3
+}}}
 
 where $row1 is again an associative array like
 
-$row1['columnName'] -> value in table
+$row1['columnName'] => value in table
 
-=== Smart Assign Function ===
+== Smart Assign Function ==
 
 Now one frequently used task is to extract data from the table and display it.
 A very quick way to do this is
@@ -82,6 +84,4 @@ foreach($data as $row){
 }}}
 
 The reset() method removed everything from User Object, which is in the $`_`fields array.
-
-
 
