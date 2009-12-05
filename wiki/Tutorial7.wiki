@@ -1,0 +1,5 @@
+#summary Easy Form Submission
+
+= Introduction =
+
+In this tutorial we will see how SmartModel can help us to easy submit an html form and save the form data to database, or do other database operations as required.
