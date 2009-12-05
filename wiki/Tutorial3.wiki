@@ -28,24 +28,31 @@ public $_fields = array('id','username','usertype');
 
 ==== SELECT * ====
 
+The most basic SELECT operation is to select all data from a database base table.
+i.e SELECT `*` from Table
+
+This is implemented in Model as below
 {{{
 $user = new User();
 $user->read();
 }}}
 
-This will product the SQL
 
+*SQL Output*
 Query Exec:  SELECT `*` FROM ``users``
+
+Since, no member variables are set in the User Object, no where clause is added. If member variables where set in the object, then where clause would have been added, as shown below
 
 
 ==== SELECT * with WHERE CLAUSE ====
+
+Often, its is required to read only specific rows from a database table depending on few conditions. These conditions are specified in the where clause. The Model Class by default supports only AND clause. There is option to specify a OR clause as well, but that we will see later.
 
 This is the signature of the read function
 
 {{{
 public function read($select = null,$where = null,$orderby = null,$limitsql = "");
 }}}
-
 
 Using the read fuction
 {{{
@@ -64,7 +71,6 @@ The Model class checks if any member variables of the User Object have been set 
 If any values have been set it will put that in the where clause with AND as the operator
 
 So
-
 {{{
 $user = new User();
 $user->username = 'Test';
@@ -76,8 +82,6 @@ $user->read();
 Query Exec: SELECT `*` FROM `users` where users.id='1' AND users.username='Test' 
 
 Another way of using the read function is
-
-
 
 {{{
 $user = new User();
@@ -92,7 +96,6 @@ Query Exec: SELECT `*` FROM `users` where users.id='1' AND users.username='Test'
 In this variation we are explicitly passing a where clause as associate array. In this case the Model class, wont check which member variables of the set. It just use the where array passed. _Its important to note that the key of the associative array should be same as the variable name of the class. It should not be same as the database column name_
 
  
-
 ==== SELECT (column....) with WHERE CLAUSE ====
 
 
@@ -112,7 +115,8 @@ You can include a where clause like before in this as well.
 
 ==== SELECT with Orderby ====
 
-To do ordering of the result set
+Often ordering of result needs to be done, either ascending or descending. This can be done like this:
+
 {{{
 $user = new User();
 $order = array('asc'=> 'username');
@@ -137,6 +141,8 @@ Query Exec: SELECT * FROM `users` ORDER BY id DESC, username ASC
 _But there can be only 1 asc and desc key in the order by array. In multiple asc and desc are passed, only the last one will be used.
 
 ==== LIMIT in SELECT ====
+
+Limit is used in sql, to reduce the number of rows returned by an SQL query. This is very useful during paging of result set. Limit can be implemented as below
 
 {{{
 $user = new User();
@@ -167,3 +173,20 @@ $opt['select']
 $opt['order']
 $opt['limit']
 }}}
+
+
+==== Advanced SELECT * with WHERE CLAUSE ====
+
+Only AND is supported by default the where clause of a read() function.
+
+But it is possible, to put OR as well in the read() function.
+The way to do it is
+
+{{{
+$user = new User();
+$opt['where'] = array('username'=>'Test','id'=>array('1',Model::MODEL_WHERE_TYPE_OR));
+$user->smartRead($opt);
+}}}
+
+*SQL Output*
+Query Exec: SELECT * FROM `users` where users.username='Test' OR users.id='1' 
