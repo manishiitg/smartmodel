@@ -2,7 +2,7 @@
 
 = Reading or SQL Select =
 
-ere the test database table and model we had written in Tutorial1
+Here the test database table and model we had written in Tutorial1
 
 {{{
 CREATE TABLE IF NOT EXISTS `users` (
