@@ -23,7 +23,6 @@ class New_Style implements ModelStyles{
 // All function definitions
 
 }
-
 }}}
 
 Here, *New_Style* is the name for the new UI Style.
@@ -45,3 +44,5 @@ Now to use your new style just use the new constant as an argument to the constr
 {{{
 $myUI=new UI(UI::NEW_STYLE);
 }}}
+
+Goto http://code.google.com/p/smartmodel/wiki/UIStyleFunctions to get more details on how to implement the functions for your style.
