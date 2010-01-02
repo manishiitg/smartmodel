@@ -28,9 +28,11 @@ class New_Style implements ModelStyles{
 
 Here, *New_Style* is the name for the new UI Style.
 
-Save the file as *New_Style.php*.
+Save the file as *New_Style.php*. This file should be placed inside the *UI* directory.
 
 *Note: It is very important that the class name for the style and the file name for the style are same; otherwise the style will not work.*
+
+*Note: Also note that the UI directory should be in the same directory where the UI.php class file is located. Also you don't have to include your style file in your code, It get's included automatically.*
 
 Next step is to tell the UI model about this new style. This is done by adding a new constant in UI.php file. This should be a string constant having value as the class name for the style. For the above example it will be like this:
 
