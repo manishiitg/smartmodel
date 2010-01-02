@@ -1,0 +1,77 @@
+*File Upload*
+
+= Introduction =
+This tutorial details the steps for file uploading.
+
+This require file as involved in upload the file.
+
+*FileUtil.php*: Contains all the methods (_smartUpload,setUploadProperties_) neccessary for File upload.
+
+*Example1:*This is an example of file upload using smartUpload method Which works only if form tag has attribute like as 
+
+{{{<form action=””method=”post” enctype=”multipart/formdata”>}}}
+
+{{{
+$file=new FileModel();  
+$fileutil=new FileUtil();
+$fileutil->smartUpload($file,”folder path”);
+}}}
+
+In this example File Model is name of model for using smartModel and $file is an object of Model which has member variable called file 
+
+which is same as input file.It assign filename to model  even to database.Folder name is full path where the file needs to be uploaded.
+
+*Note* : In latest folder name you must include ‘/’ in end. 
+
+*Example2:* This is an example for file upload using _setUploadProperties_ and _smartUpload_ method.
+
+
+{{{
+$file=new Filemodel(); 
+$array[‘filename’]=array(‘required’=>’true’,’filter’=>’jpeg’,’folder’=>’admin/upload’,’unique’=>’true’,‘ sanitize’=>’true’,’fullpath’=>’true’);
+$fileutil->setUploadProperties($array);
+$fileutil->debug=true;
+$fileutil->smartUpload($file,”folder path”);
+}}}
+
+   And form design looks  like:
+{{{
+<form action=””  method=”post” enctype=”multipart/form-data”>
+<input type=”file” name=”filename”/>
+<input type=”submit”>
+</form>
+}}}
+
+For successful file uploading it is neccessary to give enctype=”multipart/form-data”    in form start tag.So that file is moved to upload folder.
+
+Here we defined an array containing attributes
+
+_*required=>’true’:*_  If this is set true and $_FILES_  array doesn’t have file name in it then  it will generate error message otherwise it will not show any error.
+
+_*filter=>’pdf’:*_ Here we define file extension type of the file being uploaded.We can define multiple file extensions  in array separated by commas like as Filter=>array(‘pdf’,’jpeg’,’mp3’).
+
+_*Folder=>’admin/upload/’:*_ We define path name where we will upload the file.If we pass different folder names into method _smartUpload_ and _setUploadProperties_ 
+
+then file will be moved into folder whose path is passed into _setUploadProperties_ method.
+
+_*Unique=>’true’:*_ It will append unique id to each file name so that multiple files of same name in upload folder can be uploaded.
+
+_*Sanitize=>’true’:*_ If this is set true then it will remove all white spaces ,brackets from filename.
+
+_*Fullpath=>’true’:*_ In this case object will store fullpath of file name.
+
+Now this array is passed into setUploadProperties method of FileUtil class.
+
+*$fileutil->debug=true :* This echos any relevant output.If set false no message would be printed. 
+
+*Note:* filename in $array[‘filename’] must have same name as in input type file name.
+
+*_Results:_* After uploading file if $fileutil->debug=true; then message echos  looks like:
+
+File Sucessfully Moved to admin/upload/4b3f0f2a36fffLighthouse.jpg 
+
+where 4b3f0f2a36fff is unique id appended to file name and an array is  returned which looks like 
+
+_Array([TYPE]=>image/jpeg,[NAME]=>abc.jpeg,[FINALNAME]=> 4b3f4844af121abc.jpeg,[ERROR]=>)_
+
+This array contain type of file being uploaded,name of file ,final name means after appending unique id to the file name and error show empty if error not comes. 
