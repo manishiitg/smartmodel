@@ -1,4 +1,4 @@
-*File Upload*
+#summary *File Upload*
 
 = Introduction =
 This tutorial details the steps for file uploading.
