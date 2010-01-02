@@ -4,6 +4,9 @@
 
 This Section details on how the various functions for the ModelStyles Interface should be implemented to create your own UI Style.
 
+All keywords inside {} are system keywords.
+eg. {UTIL_SECTION} dont, remove or change these.
+There will be overwritten by UI code with proper HTML.
 
 =Functions==
 
@@ -11,7 +14,8 @@ This Section details on how the various functions for the ModelStyles Interface 
 Deprecated.
 
 ===getTableHTMLStructure():===
-This function should return a string that will contain the HTML code for the general layout of the UI. This layout is used by the UI class to create the table. For our example we will define the function as follows:
+This function should return a string that will contain the HTML code for the general layout of the UI. This layout is used by the UI class to create the table. You will need to define your own layout which you need to use.
+For our example we will define the function as follows:
 
 {{{
 public function getTableHTMLStructure(){
@@ -105,7 +109,7 @@ public function getFilterHTML(){
  $html.='{FILTER_FORMS}';
  $html.='</span>';
 
- return$html;
+ return $html;
 
 }
 }}}
