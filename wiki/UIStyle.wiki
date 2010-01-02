@@ -1,0 +1,45 @@
+#summary Creating your own UI Style.
+
+= Introduction =
+
+This tutorial details the steps of creating a new style for the UI model.
+
+This requires the files from *SmartModel*.
+
+The files directly related to this tutorial are:
+
+    * *UI.php*: the main UI class.
+    * *ModelStyles.php*: contains the *ModelStyles* interface. 
+
+=Implementing a new UI Style class:=
+Creating a new style starts with implementing a new class for the ModelStyles interface. This interface contains all function prototypes that are required to implement a new style.
+
+*Note: All functions from the interface needs to be implemented in the class for the new style.*
+
+The syntax for class definition is
+{{{
+class New_Style implements ModelStyles{
+
+// All function definitions
+
+}
+
+}}}
+
+Here, *New_Style* is the name for the new UI Style.
+
+Save the file as *New_Style.php*.
+
+*Note: It is very important that the class name for the style and the file name for the style are same; otherwise the style will not work.*
+
+Next step is to tell the UI model about this new style. This is done by adding a new constant in UI.php file. This should be a string constant having value as the class name for the style. For the above example it will be like this:
+
+{{{
+constant NEW_STYLE = “New_Style”;
+}}}
+
+Now to use your new style just use the new constant as an argument to the constructor when creating a new instance of the UI class. This is done in the following way:
+
+{{{
+$myUI=new UI(UI::NEW_STYLE);
+}}}
