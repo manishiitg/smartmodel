@@ -1,0 +1,259 @@
+#summary Display Your database entries in tabular form
+
+= Introduction =
+
+With just Using some easy Function Show your database Table Entries in Tabular form
+
+
+= Details =
+
+UI  model  dynamically  displays  your  Database Tables  values  in Tabular form.By default,It comes in  3 different themes , To add new themes please refer to UI style tutorial
+[http://code.google.com/p/smartmodel/wiki/UIStyle]
+
+Lets define an instance for our UI class
+
+`$usersTable=new UI(UI::STYLE_LIGHT_GREY);` 
+
+Other themes are
+STYLE_SIMPLE 
+STYLE_APPMII
+
+
+If u do not pass any theme name,STYLE_LIGHT_GREY will be selected.
+
+Let’s say we have a Table `users` as following:
+{{{
+CREATE TABLE IF NOT EXISTS `users` (
+  `ID` bigint NOT NULL auto_increment,
+  `Username` varchar(255) NOT NULL,
+  `usertype` integer unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+);
+}}}
+And Class defined for our table is:
+{{{
+class User extends SmartModel{
+
+	public $id;
+	public $Username;
+	public $usertype;
+	
+	public $_table = "users";
+	public $_fields = array(
+	"id"=>"ID",	
+	"username"=>”Username”,
+	"usertype"
+	);
+}}}
+*
+Note: The fields name in our Database table are represented by Variable name assigned to them in all the functions discussed here. So Further in this tutorial column name actually refer to the variable name discussed above.* 
+
+==Generate Tables==
+The signature for the function that generates table is
+
+*Public function generateTable($obj)*
+
+This function generates final Table layout
+
+$obj is your Base Model Objectname 
+
+Example:
+{{{
+$obj=new->user;
+$table=$usersTable->generateTable($obj);
+}}}
+
+*Note:just echo the $table where you want your tables to get displayed.The Class called on $obj will be the base Model.All Column names will belong to this class’s variable names.*
+
+==Assigning Table’s Column Name:==
+ 
+Now To start with lets assign display name to the column names of our table.
+The Signature of the Function used for this is
+
+*Public function setColumnNameMapping($array)* 
+
+It accepts associative array of column Name as key and The name that we want the column heading in our table as value 
+
+Example:
+
+ {{{
+$array=array('id'=>'Id',’username’=>’Name’,’usertype’=>’Type’);
+$usersTable-> setColumnNameMapping($array);
+}}}
+
+This will generate a table with column names Id,Name,and Type.If any field of our database is not mentioned in this function it will be displayed with its Column name by default 
+
+==Hiding Column Name==
+
+Now suppose we do not want some fields to be displayed in our table.So we will use
+
+* Public function setHideColumn($array)*
+
+Just Pass The column name as an array in this function and they won’t be displayed.say we do not want to show id in our table
+
+{{{
+$array=array(‘id’);
+$usersTable-> setColumnNameMapping($array);
+}}}
+
+This Column name passed in this function won’t be displayed.
+
+==Add New Column To Your Table==
+
+Funtion for this purpose is *addCustomColumn($array)*
+
+Just pass the new column name and a function name associated with this column in an array like
+{{{
+$array=array(‘Test’=’testMapping’)
+$userTable->addCustomColumn($array);
+Function testMapping($row){
+Return “test”;
+}
+}}}
+
+Value returned by this function will be displayed in ‘Test ’ column of your table
+
+== To Combine two or more models == 
+
+Often it happens that we need to display fields value from more than one table of our databse into a tablular form.For this we use
+
+*Public function AddModel($array)*
+
+This function works on Join keyword of sql
+Say There is another table called Profile 
+{{{
+CREATE TABLE IF NOT EXISTS `Profile` (
+  `ID` bigint NOT NULL auto_increment,
+  `userid` bigint NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+   PRIMARY KEY  (`id`);
+FOREIGN KEY (`userid`) references `User`(`id`) on delete cascade on update cascade	);
+
+class Profile extends SmartModel{
+
+	public $id;
+	public $userid;
+	public $name;
+      public $email;
+	
+	public $_table = "Profile";
+	public $_fields = array(
+	"id"=>"ID",	
+	"userid",
+	"name",
+       “email”
+	);
+}}}
+As we can see this table joins with user table at userid
+{{{
+$array=array(‘id’=>’profile.userid’);
+$usersTable-> AddModel($array);
+}}}
+
+*NOTE:In Profile.userid  Profile is the class name.other model’s column name will be suffixed by ClassName like ClassName.variableName* 
+
+
+==addShowOnlyModel($array)is just opposite of setHideColumn($array)== 
+
+ The column names suffixed with ClassName passed in this assosiative array are only displayed all others are blocked say eg we want to display user email and username only
+Since,
+
+`$array=array(‘ClassName.ColumnName’)`
+So it will be Like
+{{{
+$array=array(‘user.username’,’Profile.email’);
+$usersTable-> addShowOnlyModel($array);
+}}}
+Another Important function is *setColumnMapping($array)* 
+Say you write
+
+`$usersTable-> setColumnMapping(array('usertype'=>'mapType'))`
+
+This function accepts Column name as key and a function name of your choice as value
+The function that You will assign will be generated i.e mapType in this case.With 2 arguments passed to it,$var is the current fields’s value and $row will have the whole row value as an array.
+Say for example we want to display UserType as Staff for field value 1 and as Client for field value 2.so
+{{{
+function mapType($var,$row=null){
+if($var==1)
+return “staff”;
+if($var==2)
+return “client”;
+}
+}}}
+
+*Public Function setActionColumn($array)*
+This function adds an action column to your table.
+Say you want to edit or delete option for each row
+We can use it like 
+{{{
+$array =array('Edit' => array('href'=>'filename?userid={id}'),'Delete'=> array('href'=>'file?userid={id}&action=del')
+));
+$usersTable->setActionColumn($array);
+}}}
+
+*Public Function setColumnOrder($array)*
+ Accepts associative array of the class variable names of corresponding column  as key and column position as value 
+Say you want your id to be display at 2nd position 
+
+`$array=array(‘id’=>2);`
+
+`$usersTable-> setColumnOrder($array)`
+
+
+
+*Public Function setFilterColumn($array);*
+
+Accepts array of the class Column Name .This will add filter option for the table with this particular column 
+{{{
+$array=array(‘type’)
+$usersTable-> setFilterColumn($array);
+}}}
+
+*Public Function setRemoveSorting($array)*
+	
+Accepts array of the class variable names of corresponding column .This will remove sorting for the table for this particular column 
+
+{{{
+$array=array(‘variable name’)
+$usersTable->setRemoveSorting($array)
+}}}
+
+
+*enablePagaing, enableSorting,enableFiltering,enableSearching,enableUtilCSV,enableUtilPDF, *
+
+These variables can be set True or False to activate or deactivate respectively corresponding properties
+
+Example:
+
+`$usersTable->enablePagaing=True;`
+
+
+ 
+*sortCol,sorting,*
+
+Accepts a column name and desc or asc respectively to give an order of your table display
+
+Example
+`$usersTable->sortCol='id';`
+`$usersTable->sorting='desc'`
+
+This will sort the table in descending order based on id;
+
+
+*page,pagesize* 
+
+These variables can be assigned to represent number of pages and number of rows per page respectively
+
+Example
+`$usersTable->page=3;`
+
+
+
+
+This will generate 3 pages.
+ 
+`$usersTable->pagesize=10`
+
+This will show 10 entries in one page
+
