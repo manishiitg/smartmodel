@@ -32,6 +32,10 @@ $array[‘filename’]=array(‘required’=>’true’,’filter’=>’jpeg’
 $fileutil->setUploadProperties($array);
 $fileutil->debug=true;
 $fileutil->smartUpload($file,”folder path”);
+if(isset($result['filename'][FileUtil::RESULT_ERROR]) && !empty($result['filename'][FileUtil::RESULT_ERROR])){
+ echo $result['filename'][FileUtil::RESULT_ERROR];
+ }(filename must be same as input type file name)
+
 }}}
 
    And form design looks  like:
@@ -66,12 +70,5 @@ Now this array is passed into setUploadProperties method of FileUtil class.
 
 *Note:* filename in $array[‘filename’] must have same name as in input type file name.
 
-*_Results:_* After uploading file if $fileutil->debug=true; then message echos  looks like:
-
-File Sucessfully Moved to admin/upload/4b3f0f2a36fffLighthouse.jpg 
-
-where 4b3f0f2a36fff is unique id appended to file name and an array is  returned which looks like 
-
-_Array([TYPE]=>image/jpeg,[NAME]=>abc.jpeg,[FINALNAME]=> 4b3f4844af121abc.jpeg,[ERROR]=>)_
-
-This array contain type of file being uploaded,name of file ,final name means after appending unique id to the file name and error show empty if error not comes. 
+*_Results:_* As a result getResult method return an array is  returned which
+shows which type of error comes if there is no error then it shows nothing.
