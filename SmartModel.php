@@ -1,18 +1,57 @@
 <?php
 
 /**
- * Author: Manish
- * Version: v0.2.6 alpha
+ *
+ * @author Manish <manish@excellencetechnoloiges.in>
+ * @version v0.2
+ * @package SmartModel
+ * @copyright Copyright (c) 2009, Excellence Technologies
+ *
  */
+
+require_once dirname(__FILE__).'/Model.php';
+require_once dirname(__FILE__).'/Validation.php';
+
 class SmartModel extends Model {
 
-	const debug = false;
+	const debug = False;
 	public function __construct(){
+		parent::__construct();
+	}
+	public function relate(){
+		$args = func_get_args();
+		$join = array();
+		$class_name = get_class($this);
+		foreach($args as $model){
+			if(is_object($model)){
+				$class_name_r = get_class($model);
+				$fk_r = $model->_fk;
+				foreach($fk_r as $col_r => $table){
+					if(strpos($table,'.') !== false){
+						$m = substr($table,0,strpos($table,'.'));
+						$v = substr($table,strpos($table,'.')+1);
+						if($m == $class_name){
+							$join[$v] = $class_name_r.'.'.$col_r;
+						}
+					}
+				}
+			}
+		}
+
+		$data =  $this->join($join);
+		return $data;
 
 	}
 	public function reset(){
-		foreach($this->_fields as $k =>$v){
-			unset($this->$k);
+		if($this->is_assoc($this->_fields)){
+			foreach($this->_fields as $k =>$v){
+				unset($this->$k);
+				unset($this->$v);
+			}
+		}else{
+			foreach($this->_fields as $k){
+				unset($this->$k);
+			}
 		}
 	}
 	public function smartRead($opt){
@@ -30,56 +69,57 @@ class SmartModel extends Model {
 	}
 
 	public function smartInsert(){
-		
+
 	}
 
-	public function smartAssign($array = null){
+	public function smartAssign($array = null,&$obj = null){
 		if(self::debug){
 			echo "*************Starting Smart Assign Of Model*************<br>";
 		}
-		$obj = get_object_vars($this);
-		if(isset($array)){
-			foreach($array as $k => $v){
-				if(isset($this->$k)){
-					$this->$k = $v;
-				}
-				else {
-					if($this->is_assoc($this->_fields)){
-						foreach($this->_fields as $key => $value ){
-							if(!empty($value)){
-								if($k == $value){
-									$this->$key = $v;
-									break;
-								}
-							}else{
-								if($k == $key){
-									$this->$key = $v;
-									break;
-								}
-							}
-						}
-					}else{
-						foreach($this->_fields as $value ){
-							if($k == $value){
-								$this->$value = $v;
-								break;
-							}
+		if($obj != null){
+			$array_check = $obj->getKeys($obj->_fields);
+			$class = get_class($obj);
+			if(isset($array)){
+				foreach($array as $k => $v){
+					if(strpos($k,'.') !== false){
+						$table = substr($k,0,strpos($k,'.'));
+						$var = substr($k,strpos($k,'.')+1);
+						if($table == $class){
+							$colname = $obj->getFieldName($var);
+							$obj->$colname = $v;
 						}
 					}
 				}
+			}
+			if(self::debug){
+				echo $this;
 			}
 		}else{
-			if(isset($_REQUEST)){
-				foreach($obj as $k=>$v){
-					if(isset($_REQUEST[$k])){
-						$this->$k = $_REQUEST[$k];
+			$array_check = $this->getKeys($this->_fields);
+			if(isset($array)){
+				foreach($array as $k => $v){
+					if(in_array($k,$array_check)){
+						$this->$k = $v;
+					}
+					else {
+						$colname = $this->getFieldName($k);
+						$this->$colname = $v;
+					}
+				}
+			}else{
+				if(isset($_REQUEST)){
+					foreach($array_check as $k){
+						if(isset($_REQUEST[$k])){
+							$this->$k = $_REQUEST[$k];
+						}
 					}
 				}
 			}
+			if(self::debug){
+				echo $this;
+			}
 		}
-		if(self::debug){
-			echo $this;
-		}
+
 	}
 	private $error_msg = "";
 	public function validate(){
@@ -100,9 +140,8 @@ class SmartModel extends Model {
 					$msg = Validation::validate($this->_rules[$k],$v);
 				}
 				if(!empty($msg)){
-					$db = $this->is_assoc($this->_fields) ? $this->_fields[$k] : $k;
-					$db = empty($db) ? $k : $db;
-					$this->error_msg .= $db ." :  " .  $msg . "<br>";
+					$column = $this->getColumnName($k);
+					$this->error_msg .= $column ." :  " .  $msg . "<br>";
 				}
 			}
 		}
@@ -146,15 +185,24 @@ class SmartModel extends Model {
 		}
 		return "";
 	}
+	public static function convertDotToUnderScore($data){
+		$newdata = array();
+		foreach($data as $row){
+			$newrow = array();
+			foreach($row as $key => $val){
+				$key1 = str_replace(".","_",$key);
+				$newrow[$key1] = $val;
+			}
+			$newdata[] = $newrow;
+		}
+		return $newdata;
+	}
 	public function __toString() {
 		$string = "";
 		$obj = get_object_vars($this);
 		foreach($obj as $k=>$v){
-			if($this->is_assoc($this->_fields)){
-				if(isset($this->_fields[$k])){
-					$db = empty($this->_fields[$k]) ? $k : $this->_fields[$k];
-					$string .= $db . " : " . $v . "<br>";
-				}
+			if(isset($this->_fields[$k])){
+				$string .= $k . " : " . $v . "<br>";
 			}else{
 				if(in_array($k,$this->_fields))
 				$string .= $k . " : " . $v . "<br>";
