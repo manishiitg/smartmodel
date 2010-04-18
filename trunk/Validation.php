@@ -1,7 +1,11 @@
 <?php
 /**
- * Author: Manish
- * Version: v0.2.6 alpha
+ *
+ * @author Manish <manish@excellencetechnoloiges.in>
+ * @version v0.2
+ * @package SmartModel
+ * @copyright Copyright (c) 2009, Excellence Technologies
+ *
  */
 class Validation {
 	const TYPE_ALLVALID = 0;
@@ -23,8 +27,8 @@ class Validation {
 	const TYPE_ISAMERICANEXPRESS = 12;
 	const TYPE_ISDISCOVERCARD = 13;
 
-	const TYPE_INMODEL = 14;
-	const TYPE_NOTINMODEL = 15;
+	const TYPE_CREDITCARD = 14;
+
 
 	const debug = false;
 	public static function validate($type,$value,$array = null,$msg = null){
@@ -124,9 +128,17 @@ class Validation {
 					echo "Rule: IN ARRAY <br>";
 				}
 				if(isset($array)){
-					if(in_array($value,array_keys($array))){
-						$match = true;
+					if(Model::is_assoc($array)){
+						if(in_array($value,array_keys($array))){
+							$match = true;
+						}
 					}else{
+						if(in_array($value,$array)){
+							$match = true;
+						}
+					}
+
+					if(!$match){
 						if(!isset($msg)){
 							$msg = "Should Be In " . implode(",",$array);
 						}
@@ -185,89 +197,14 @@ class Validation {
 					}
 				}
 				break;
+			case self::TYPE_CREDITCARD:
 
-			case self::TYPE_INMODEL:
-				$found = false;
-				foreach($array as $model => $var){
-					$obj = new $model;
-					$varas = get_object_vars($obj);
-					if(isset($var) && in_array($var,array_keys($varas))){
-
-						$data = $obj->read(array($var));
-						foreach($data as $row){
-							if(Model::is_assoc($obj->_fields)){
-								if(!empty($obj->_fields[$var])){
-									if($row[$obj->_fields[$var]] == $value){
-										$found = true;
-										break;
-									}
-								}else{
-									if($row[$var] == $value){
-										$found = true;
-										break;
-									}
-								}
-							}else{
-								if(self::debug){
-									echo $row[$var] . " --- " . $value . "<br>";
-								}
-								if($row[$var] == $value){
-									$found = true;
-									break;
-								}
-							}
-						}
-					}
-				}
-				if($found){
+				if(strlen($value) == 16){
 					$match = true;
 				}else{
-					$match = false;
 					if(!isset($msg)){
-						$msg = "$value In " . implode('=>',$array);
+						$msg = "Invalid Card Number";
 					}
-				}
-				break;
-			case self::TYPE_NOTINMODEL:
-				$found = false;
-				foreach($array as $model => $var){
-					$obj = new $model;
-					$varas = get_object_vars($obj);
-					if(isset($var) && in_array($var,array_keys($varas))){
-
-						$data = $obj->read(array($var));
-						foreach($data as $row){
-							if(Model::is_assoc($obj->_fields)){
-								if(!empty($obj->_fields[$var])){
-									if($row[$obj->_fields[$var]] == $value){
-										$found = true;
-										break;
-									}
-								}else{
-									if($row[$var] == $value){
-										$found = true;
-										break;
-									}
-								}
-							}else{
-								if(self::debug){
-									echo $row[$var] . " --- " . $value . "<br>";
-								}
-								if($row[$var] == $value){
-									$found = true;
-									break;
-								}
-							}
-						}
-					}
-				}
-				if($found){
-					$match = false;
-					if(!isset($msg)){
-						$msg = "$value In " . implode('=>',$array);
-					}
-				}else{
-					$match = true;
 				}
 				break;
 			default:

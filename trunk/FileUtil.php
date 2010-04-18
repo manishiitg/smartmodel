@@ -1,41 +1,14 @@
 <?php
 /**
- * Author: Manish
- * Version: v0.2.1 alpha
+ *
+ * @author Manish <manish@excellencetechnoloiges.in>
+ * @version v0.2
+ * @package SmartModel
+ * @copyright Copyright (c) 2009, Excellence Technologies
+ *
  */
 class FileUtil {
-	const debug = false;
-
-	/**
-	 * Any File you want to apply.
-	 * Basically to check if a string is present in the $_FILES[]['type']
-	 * e.g if(strpos($_FILES[name][type],$filter) == false)
-	 *
-	 * This can be a single string or an array
-	 */
-	public $filter;
-	/**
-	 * If this is set to true, the while spaces in filename are converted to underscore
-	 * @var unknown_type
-	 */
-	public $removeWhiteSpaces = true;
-	/**
-	 * If this is set to true, then a uniqid() is appended in front of the filename
-	 * @var unknown_type
-	 */
-	public $makeUnique = true;
-	/**
-	 * If this is set to true the the full file name is stored in object,
-	 * ie $folder/$filename
-	 * The default is only the filename
-	 * @var unknown_type
-	 */
-	public $fullPath = false;
-
-	private $name;
-	private $type;
-	private $error;
-	private $finalName;
+	public $debug = false;
 
 	const ERROR1 = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
 	const ERROR2 = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
@@ -47,102 +20,144 @@ class FileUtil {
 	const ERROR_FILTER = "File Type Didnt Match Filter";
 	const ERROR_FOLDER = "Folder Doesnt Exist";
 
+	private $props = array();
+	const PROP_REQUIRED = 'required';
+	const PROP_FILTER = 'filter';
+	const PROP_FOLDER = 'folder';
+	const PROP_UNIQUE = 'unique';
+	const PROP_SANITIZE = 'sanitize';
+	const PROP_FULLPATH = 'fullPath';
+
+	private $result;
+	const RESULT_ERROR = "ERROR";
+	const RESULT_FINALNAME = "FINALNAME";
+	const RESULT_TYPE = "TYPE";
+	const RESULT_NAME = "NAME";
+	/**
+	 * Structure Of Array
+	 *
+	 *$array['file1'] = array(
+	 'required'=>'true', //If this file is not in $_FILES generate error message
+	 'filter'=>'mp3', //String or an array
+	 'folder'=>'path', //Path where to upload this file
+	 'unique' => 'true', //Make the filename stored in model as unique
+	 'sanitize' => 'true', // Remove white spaces and brackets from filename
+	 'fullPath' => 'true' //In the model set full path of file
+		);
+	 * @param unknown_type $array
+	 */
+	public function setUploadProperties($array){
+
+		$this->props = $array;
+	}
+
 	/**
 	 *	$folder should contain "/" at the end
 	 * @param unknown_type $model
 	 * @param unknown_type $folder
 	 * @return unknown_type
 	 */
-	public function smartUpload(&$model,$folder){
-		if(isset($_FILES)){
+	public function smartUpload(&$model,$folder = ''){
+		if(isset($_FILES) && !empty($_FILES)){
 			$obj = get_object_vars($model);
 			foreach($obj as $k => $v){
 				if(isset($_FILES[$k])){
-
-
-					$this->error = $_FILES[$k]['error'];
-					if($this->error ==   UPLOAD_ERR_INI_SIZE){
-						return self::ERROR1;
-					}else if($this->error ==  UPLOAD_ERR_FORM_SIZE){
-						return self::ERRRO2;
-					}else if($this->error ==  UPLOAD_ERR_PARTIAL){
-						return self::ERROR3;
-					}else if($this->error ==  UPLOAD_ERR_NO_FILE){
-						return self::ERROR4;
-					}else if($this->error == UPLOAD_ERR_NO_TMP_DIR){
-						return self::ERROR5;
-					}else if($this->error == UPLOAD_ERR_CANT_WRITE){
-						return self::ERROR6;
-					}else if($this->error == UPLOAD_ERR_EXTENSION){
-						return self::ERROR7;
+					$error = $_FILES[$k]['error'];
+					if($error ==   UPLOAD_ERR_INI_SIZE){
+						$error =  self::ERROR1." Error Code: $error";
+					}else if($error ==  UPLOAD_ERR_FORM_SIZE){
+						$error =  self::ERRRO2." Error Code: $error";
+					}else if($error ==  UPLOAD_ERR_PARTIAL){
+						$error =  self::ERROR3." Error Code: $error";
+					}else if($error ==  UPLOAD_ERR_NO_FILE){
+						if(isset($this->props[$k][self::PROP_REQUIRED]) && $this->props[$k][self::PROP_REQUIRED] == true){
+							$error =  self::ERROR4." Error Code: $error";
+						}else{
+							$error = '';
+						}
+					}else if($error == UPLOAD_ERR_NO_TMP_DIR){
+						$error =  self::ERROR5." Error Code: $error";
+					}else if($error == UPLOAD_ERR_CANT_WRITE){
+						$error =  self::ERROR6." Error Code: $error";
+					}else if($error == UPLOAD_ERR_EXTENSION){
+						$error =  self::ERROR7." Error Code: $error";
 					}
 					else{
-							
-						$this->type = $_FILES[$k]['type'];
-						$this->name = $_FILES[$k]['name'];
-							
-						if($this->removeWhiteSpaces){
-							$this->finalName = str_replace(" ","_",$this->name);
+						$error = '';
+						$this->result[$k][self::RESULT_TYPE] = $_FILES[$k]['type'];
+						$this->result[$k][self::RESULT_NAME] = $_FILES[$k]['name'];
+
+						if( (isset($this->props[$k][self::PROP_SANITIZE]) && $this->props[$k][self::PROP_SANITIZE] == true)){
+							$name = str_replace(" ","_",$this->result[$k][self::RESULT_NAME]);
+							$name = str_replace("(","",$name);
+							$name = str_replace(")","",$name);
+							$name = str_replace("&","",$name);
+							$name = str_replace("'","",$name);
+							$this->result[$k][self::RESULT_FINALNAME] = $name;
+						}else{
+							$this->result[$k][self::RESULT_FINALNAME] = $this->result[$k][self::RESULT_NAME];
 						}
 
-						if(isset($this->filter) && !empty($this->filter)){
-							if(is_array($this->filter)){
+
+						if(isset($this->props[$k][self::PROP_FILTER])){
+							$filter = $this->props[$k][self::PROP_FILTER];
+							if(is_array($filter)){
 								$found = false;
-								foreach($this->filter as $f){
-									if(strpos($this->type,$f) !== false){
+								foreach($filter as $f){
+									if(strpos($this->result[$k][self::RESULT_TYPE],$f) !== false){
 										$found = true;
 									}
 								}
 								if(!$found){
-									return self::ERROR_FILTER;
+									$error =  self::ERROR_FILTER ." Type: " . $this->result[$k][self::RESULT_TYPE];
 								}
 							}else{
-								if(strpos($this->type,$this->filter) === false){
-									return self::ERROR_FILTER;
+								if(strpos($this->result[$k][self::RESULT_TYPE],$filter) === false){
+									$error =  self::ERROR_FILTER;
 								}
 							}
 						}
 
-						if($this->makeUnique){
+						if(isset($this->props[$k][self::PROP_UNIQUE]) && $this->props[$k][self::PROP_UNIQUE] ) {
 							$uid = uniqid();
-							$this->finalName = $uid.$this->finalName;
+							$this->result[$k][self::RESULT_FINALNAME] = $uid.$this->result[$k][self::RESULT_FINALNAME];
 						}
-						if(!file_exists($folder)){
-							return self::ERROR_FOLDER;
+						if(isset($this->props[$k][self::PROP_FOLDER])){
+							$folder = $this->props[$k][self::PROP_FOLDER];
 						}
-						if(move_uploaded_file($_FILES[$k]['tmp_name'], $folder.$this->finalName)){
-							if($this->fullPath){
-								$model->$k = $folder.$this->finalName;
-							}else{
-								$model->$k = $this->finalName;
+						if(!file_exists($folder) && !empty($folder)){
+							$error =  self::ERROR_FOLDER;
+						}
+						if(move_uploaded_file($_FILES[$k]['tmp_name'], $folder.$this->result[$k][self::RESULT_FINALNAME])){
+							if($this->debug){
+								echo 'File Sucessfully Moved to '. $folder.$this->result[$k][self::RESULT_FINALNAME];
 							}
-							if(self::debug){
-								echo 'File Sucessfully Moved to '. $folder.$this->finalName;
+							if(isset($this->props[$k][self::PROP_FULLPATH]) && $this->props[$k][self::PROP_FULLPATH] == true){
+								$model->$k = $folder.$this->result[$k][self::RESULT_FINALNAME];
+							}else{
+								$model->$k = $this->result[$k][self::RESULT_FINALNAME];
 							}
 						}else{
-							if(self::debug){
-								echo 'Error While Moving File To Folder ' .$folder ;
-							}
+							$error =  'Error While Moving File To Folder ' .$folder ;
 						}
 					}
+					$this->result[$k][self::RESULT_ERROR] = $error;
+				}else{
+					if(isset($this->props[$k][self::PROP_REQUIRED]) && $this->props[$k][self::PROP_REQUIRED] == true){
+						$this->result[$k][self::RESULT_ERROR] = $model->getColumnName($k) .  ' Is Required';
+					}
+				}
+				if($this->debug && isset($this->result[$k])){
+					print_r($this->result[$k]);
 				}
 			}
 		}else {
-			if(self::debug){
+			if($this->debug){
 				echo 'File Upload Called But $_FILES is not set';
 			}
 		}
 	}
-	public function getName(){
-		return $this->name;
-	}
-	public function getType(){
-		return $this->type;
-	}
-	public function getErrorCode(){
-		return $this->error;
-	}
-	public function getFinalName(){
-		return $this->finalName;
+	public function getResult(){
+		return $this->result;
 	}
 }
