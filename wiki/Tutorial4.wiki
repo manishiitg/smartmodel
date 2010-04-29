@@ -85,3 +85,15 @@ foreach($data as $row){
 
 The reset() method removed everything from User Object, which is in the $`_`fields array.
 
+
+=== Using where condition with Read() ===
+
+
+Lets start with basic example
+
+{{{
+$user=new User();
+$where=array('id'=>1,'status'=>'active');
+$data=$user->read(null,$where);
+}}}
+this will return an array for condition id=1 and status=active
