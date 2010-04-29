@@ -1,17 +1,12 @@
-#summary Join two or mare table using join()
+#summary Data from two or mare tables using join()
 
 = Introduction =
-join() function is used to join two or more tables and fetch values using model 
-
-
-= Details =
-Let's take two classes say
-user and coach that extends to smartmodel
-so now we will join these tables associated with these two classes and fetch the values
-
-join() is defined as
+Read data from two or more tables.join() is defined as
 
 join($join = null,$whereArr = null,$selectArr = null,$orderby = null,$limit = "",$count =false)
+
+= Details =
+Let's take two classes say  user and coach that extends to smartmodel.
 
 Let's say our parent class would be User and field common to both the tables is user's id and coach's table's user_id
 
