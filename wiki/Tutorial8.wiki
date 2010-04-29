@@ -1,4 +1,4 @@
-#Join two or mare table using Model
+Join two or mare table using join()
 
 = Introduction =
 Join tables and read data from them made easy
