@@ -1,12 +1,31 @@
-Join two or mare table using join()
+#summary Join two or mare table using join()
 
 = Introduction =
-Join tables and read data from them made easy
+join() function is used to join two or more tables and fetch values using model 
 
 
 = Details =
+Let's take two classes say
+user and coach that extends to smartmodel
+so now we will join these tables associated with these two classes and fetch the values
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+join() is defined as
+join($join = null,$whereArr = null,$selectArr = null,$orderby = null,$limit = "",$count =false)
+Let's say our parent class would be User and field common to both the tables is user's id and coach's table's user_id
+
+Example:
+
+{{{
+$user=new User();
+$coach=new Coach();
+$join = array("id"=>"coach.user_id");
+$whereArr = array("status" => 'active',"coach.status"=>'active');
+$req1 = $user->join($join,$whereArr);
+
+}}}
+
+So here,
+$join is an array which takes the condition under which tables would be joined.
+$whereArr is array to generate where condition.
+Please Note:
+Any field other than that of parent classes,should be suffixed with its respective class name
