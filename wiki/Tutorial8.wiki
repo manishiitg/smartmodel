@@ -1,0 +1,12 @@
+#Join two or mare table using Model
+
+= Introduction =
+Join tables and read data from them made easy
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
