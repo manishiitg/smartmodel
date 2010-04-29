@@ -29,8 +29,49 @@ $req1 = $user->join($join,$whereArr);
 So here,
 
 $join is an array which takes the condition under which tables would be joined.
+
 $whereArr is array to generate where condition.
+
+similarly, if you want only some specific fields to be selected define
+$selectArr=array('id','coach.name')
+
+or for order we define $orderby=array('desc'=>'id')
 
 Please Note:
 
 Any field other than that of parent classes,should be suffixed with its respective class name
+
+
+=More than 2 tables=
+
+In this case couple of case arises
+
+case 1
+
+say 3 classes are user,coach,team 
+
+Now suppose we want to get details from all these 3 tables for a particular user's coach's team such that user id is joined at coach's user_id and coach id is joined at team's coach_id
+
+so we will write
+
+{{{
+$user=new User();
+$coach=new Coach();
+$team=new Team();
+$join = array("id"=>"coach.user_id","coach.id"=>"team.coach_id");
+$req1 = $user->join($join);
+}}}
+
+case 2
+
+This is a little modification in above condition.Now In case, these 3 tables are joined to user's id at coach's user_id and team's user_id as well.i.e both team and coach table are liked to user's id
+
+so we will write
+
+{{{
+$user=new User();
+$coach=new Coach();
+$team=new Team();
+$join = array("id"=>array("coach.user_id","team.user_id"));
+$req1 = $user->join($join);
+}}} 
