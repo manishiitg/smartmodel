@@ -37,9 +37,9 @@ Please Note:
 Any field other than that of parent classes,should be suffixed with its respective class name
 
 
-=More than 2 tables=
+=Join more than 2 tables=
 
-In this case couple of case arises
+For this couple of case arises
 
 case 1
 
@@ -59,7 +59,7 @@ $req1 = $user->join($join);
 
 case 2
 
-This is a little modification in above condition.Now In case, these 3 tables are joined to user's id at coach's user_id and team's user_id as well.i.e both team and coach table are liked to user's id
+This is a little modification in above condition.Now In case, these 3 tables are joined to user's id at coach's user_id and team's user_id as well.i.e both team and coach table are linked to user's id
 
 so we will write
 
