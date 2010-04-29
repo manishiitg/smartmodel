@@ -10,7 +10,9 @@ user and coach that extends to smartmodel
 so now we will join these tables associated with these two classes and fetch the values
 
 join() is defined as
+
 join($join = null,$whereArr = null,$selectArr = null,$orderby = null,$limit = "",$count =false)
+
 Let's say our parent class would be User and field common to both the tables is user's id and coach's table's user_id
 
 Example:
@@ -25,7 +27,10 @@ $req1 = $user->join($join,$whereArr);
 }}}
 
 So here,
+
 $join is an array which takes the condition under which tables would be joined.
 $whereArr is array to generate where condition.
+
 Please Note:
+
 Any field other than that of parent classes,should be suffixed with its respective class name
