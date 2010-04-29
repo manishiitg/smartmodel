@@ -97,3 +97,67 @@ $where=array('id'=>1,'status'=>'active');
 $data=$user->read(null,$where);
 }}}
 this will return an array for condition id=1 and status=active
+
+To use OR condition 
+
+{{{
+$user=new User();
+$where=array(
+'member' => 7,
+'id'=> array(7,Model::MODEL_WHERE_TYPE_EQ,Model::MODEL_WHERE_TYPE_OR)
+);
+$data=$user->read(null,$where);
+}}}
+where condition becomes "where member=7 or id=1"
+
+To use NOTEQUAL to Condition
+
+{{{
+$user=new User();
+$where = array('id'=> array(6,Model::MODEL_WHERE_TYPE_NOTEQ));
+$data=$user->read(null,$where);
+}}}
+Condition becomes "where id !=6"
+
+To use IN condition
+
+{{{
+$user=new User();
+$cla='(7,1,2)';
+$where = array('member' => array($cla,Model::MODEL_WHERE_TYPE_IN));
+$data = $user->read(null,$where);
+}}}
+
+condition becomes "where `member` IN (7,1,2)"
+
+To use LIKE condition
+
+{{{
+$user=new User();
+$value=7;
+$where = array('member'=>array("%$value%",Model::MODEL_WHERE_TYPE_LIKE));
+$data = $user->read(null,$where);
+}}} 
+
+Condition becomes "where `member` LIKE '%7%'"
+
+TO use GREATER condition
+{{{
+$user=new User();
+$where = array('id'=> array(6,Model::MODEL_WHERE_TYPE_GT));
+$data = $user->read(null,$re);
+}}}
+
+Condition becomes "where `id` >6"
+(Similary for GREATER THAN EQUAL TO use Model::MODEL_WHERE_TYPE_GTEQ)
+
+
+TO use SMALLER condition
+{{{
+$user=new User();
+$where = array('id'=> array(6,Model::MODEL_WHERE_TYPE_LT));
+$data = $user->read(null,$re);
+}}}
+
+Condition becomes "where `id` <6"
+(Similary for SMALLER THAN EQUAL TO use Model::MODEL_WHERE_TYPE_LTWQ)
