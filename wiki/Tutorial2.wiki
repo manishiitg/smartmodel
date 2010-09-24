@@ -52,4 +52,4 @@ As you can see, the model got saved in the database. No need to write any sql qu
 $id = $userObj->insert();
 }}}
 
-$id contains the insert id of the row.
+$id contains the inserted id of the row.
