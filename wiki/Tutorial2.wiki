@@ -53,3 +53,67 @@ $id = $userObj->insert();
 }}}
 
 $id contains the inserted id of the row.
+
+
+= The Update Function OR SQL UPDATE =
+
+The signature of function is 
+{{{
+public function update();
+}}}
+
+Update function has three parameters 
+
+{{{
+update($set,$where,$opt)
+}}}
+
+{{{
+1) $set :- is used to specify parameters for update command in SET
+}}}
+
+*Example*
+{{{
+$userobj=new User();
+$userobj->sql_tracking=true;
+$set=array("username"=>"paras");
+$where = array("username"=>"sanchit");
+}}}
+
+$userobj->update($set,$where);
+
+*SQL Output*
+
+Query Exec: UPDATE `users` SET users.`username`= 'paras' WHERE users.`username`='sanchit'
+
+
+2) $where :- is used to specify the parameters for search
+
+*Example*
+{{{
+$userobj=new User();
+$userobj->sql_tracking=true;
+$userobj->username="paras";
+$where = array("username"=>"sanchit");
+}}}
+
+$userobj->update(null,$where);
+
+*SQL Output* 
+Query Exec: UPDATE `users` SET users.`username`='paras' WHERE users.`username` = 'sanchit'
+
+
+*Note:* 
+The third statement of code $userobj->username="paras" is the set statement
+for Update command
+
+
+
+
+
+
+
+
+
+
+
