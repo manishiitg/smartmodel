@@ -75,18 +75,18 @@ $req1 = $user->join($join);
 
 To read the result of the join , Foreach & smartAssign is used
 
+{{{
 foreach($req1 as $row)
 {
     $userobj->smartAssign($row); 
 }
+}}}
 
 *To assign the result of the join to another object named coach*
 {{{
    $coach=new Coach();
    $userobj->smartAssign($row,$coach); 
 }}}
-
-
 
 
 
