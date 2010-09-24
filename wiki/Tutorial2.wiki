@@ -132,9 +132,7 @@ $userobj->update($set,$where,$opt);
 
 Query Exec: UPDATE `users` SET users.`username`= 'paras' WHERE users.`username` = 'sanchit' LIMIT 0,1
 
-Limit is from 0 and one record ( 1 )
-
-
+Limit is from 0 and FIRST RECORD( 1 )
 
 
 
