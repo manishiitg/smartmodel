@@ -107,6 +107,45 @@ Query Exec: UPDATE `users` SET users.`username`='paras' WHERE users.`username` =
 The third statement of code $userobj->username="paras" is the set statement
 for Update command
 
+{{{
+3) $opt:- Is similar to Smartread function $opt 
+}}}
+
+It only supports limit 
+To use LIMIT:- *Example*
+
+*Syntax for using limit*
+{{{
+$opt['limit]=('0,1');
+}}}
+
+*Code*
+
+{{{
+$set=array("username"=>"paras");
+$where = array("username"=>"sanchit");
+$opt['limit']=('0,1');
+$userobj->update($set,$where,$opt);
+}}}
+
+*SQL Output*
+
+Query Exec: UPDATE `users` SET users.`username`= 'paras' WHERE users.`username` = 'sanchit' LIMIT 0,1
+
+Limit is from 0 and one record ( 1 )
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
