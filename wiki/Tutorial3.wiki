@@ -184,9 +184,9 @@ The way to do it is
 
 {{{
 $user = new User();
-$opt['where'] = array('username'=>'Test','id'=>array('1',Model::MODEL_WHERE_TYPE_OR));
+$opt['where'] = array('username'=>'Test','id'=>array('6',Model::MODEL_WHERE_TYPE_EQ,Model::MODEL_WHERE_TYPE_OR));
 $user->smartRead($opt);
 }}}
 
 *SQL Output*
-Query Exec: SELECT * FROM `users` where users.username='Test' OR users.id='1' 
+Query Exec: SELECT * FROM `users` where users.username='Test' OR users.id='6' 
