@@ -36,3 +36,9 @@ $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Valu
 
 Example: setFormNameMap("name"=>"Name of the candidate")
  where "name" is Model variable name and "Name of the candidate" is Form name to be displayed in UI.
+
+===setColumnOrder($array)===
+
+$array defines Key=>Value pair where "Keys" are Model Variable names and "Values" are display order of respective column.
+
+Example: setColumnOrder(array('ModelName.ModelVariable'=>'1','Id'=>'2');
