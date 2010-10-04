@@ -8,10 +8,6 @@ This tutorial deals with custom Custom functions of UI.
 
 ===setColumnMapping($array)===
 
-====Signature====
-
-public function setColumnMapping($array){ }
-
 ====Details:====
 
 $array in above Function takes key=>value pairs where keys are name of column to be mapped and values are function name to be mapped with it. Here function name specifies the function to be called for particular column.It takes value parameter for current row. This function can be used to display custom content and it returns the custom content in place of column name as an Array.
@@ -30,7 +26,7 @@ $array in above Function takes key=>value pairs where keys are name of column to
     } 
 where id=>idname is key value pair, id is column name to be mapped and idname is custom function name to be called."$value" is value of each row cell passed to the function, on the basis of "$value" value it returns "Yes or No".
 
-===public function addCustomFilter($array){}===
+===addCustomFilter($array){}===
 
 ====Details:====
 
@@ -42,7 +38,7 @@ addCustomFilter(array( "id"=>"$variableid"));
 
 In this id=>$variableid pair "id" is name Db column name and "$variableid" is name of variable to be passed. 
 
-===public function AddModel($array){}===
+===AddModel($array){}===
 
 ====Details:====
 
