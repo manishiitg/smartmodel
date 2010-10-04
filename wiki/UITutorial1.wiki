@@ -47,3 +47,11 @@ Example: setFormNameMap("name"=>"Name of the candidate")
 $array defines Key=>Value pair where "Keys" are Model Variable names and "Values" are display order of respective column.
 
 Example: setColumnOrder(array('ModelName.ModelVariable'=>'1','Id'=>'2');
+
+===setFormEnctype("multipart/form-data")===
+
+Sets form encryption type.
+
+===setFormMethod("POST")===
+
+Sets form method type. It can be Post or Get.
