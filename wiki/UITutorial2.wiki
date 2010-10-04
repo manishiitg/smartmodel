@@ -73,6 +73,6 @@ This function is used to hide the columns which are not required by user.
 
 ====Example:====
 
-setHideColumn(array('id','name');
+setHideColumn(array('id','firstname');
 
-This hides the column "id" and "name".
+This hides the column "id" and "firstname" while displaying other columns. Column names are Model variable names.
