@@ -16,21 +16,21 @@ This section explains basic UI and basic UI functions.
 
 =Basic Functions of UI=
 
-=setFormFieldMapping($array)=
+==setFormFieldMapping($array)==
 
 $array is a Key=>Value pairs where "Keys" are Name of Model Variable and "Values" are the field type of that variable.
 
 Example: setFormFieldMapping("name"=>FormUI::FORM_FIELD_TEXTFIELD)
  where "name" is Model variable name and "FormUI::FORM_FIELD_TEXTFIELD" is its Field type i.e Textfield.
 
-=setColumnNameMapping($array)=
+==setColumnNameMapping($array)==
 
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Column name to be displayed.
 
 Example: setColumnNameMapping("name"=>"Name of the candidate")
  where "name" is Model variable name and "Name of the candidate" is column name to be displayed in UI.
 
-=setFormNameMap($array)=
+==setFormNameMap($array)==
 
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Form name to be displayed.
 
