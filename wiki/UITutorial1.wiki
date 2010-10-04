@@ -14,7 +14,8 @@ This section explains basic UI and basic UI functions.
     eg: $Ui=new UI($log);
 #To generate and display UI use following syntax: 
     $Ui->generate();
-    $Ui->smartUI()
+
+    $Ui->smartUI();
 
 #You have successfully implemented UI of the Model.
 
