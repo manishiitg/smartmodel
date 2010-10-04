@@ -6,7 +6,8 @@ This section explains basic UI and basic UI functions.
 
 = Implementing UI =
 
-#First step would be to build a model for a table. 
+#First step would be to build a model for a table.
+ 
 #Next, you have to make an object of that model.
     eg: $log= new ModelName();
 #Now you have to make an object of UI.
