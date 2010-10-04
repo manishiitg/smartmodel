@@ -1,0 +1,20 @@
+#summary Add a Custom Filter
+
+= Introduction = 
+
+It is similar to where clause in sql query. 
+
+=Function=
+
+public function addCustomFilter($array){}
+
+= Details =
+
+$array takes key=>value pair where key is Db Column name and Value is name of variable to be passed similar to where clause condtion.
+
+=Example=
+
+addCustomFilter(array(
+"id"=>"$variableid"));
+
+In this id=>$variableid pair "id" is name Db column name and "$variableid" is name of variable to be passed.
