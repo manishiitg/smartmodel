@@ -15,6 +15,6 @@ $array takes key=>value pair where key is the First Model Column name and value 
 =Example=
 
 $array=array('id'=>'Second Model name.id');
-AddModel($array);
+$ui->AddModel($array);
  
 In this example id=>Second Model name.id is a key value pair, id is Model Column name of First Model and Second Model name.id is second model column name.
