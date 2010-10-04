@@ -6,7 +6,11 @@ This tutorial deals with custom Custom functions of UI.
 
 =Functions=
 
-===public function setColumnMapping($array){ }===
+===setColumnMapping($array)===
+
+====Signature====
+
+public function setColumnMapping($array){ }
 
 ====Details:====
 
