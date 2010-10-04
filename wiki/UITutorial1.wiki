@@ -24,6 +24,8 @@ This section explains basic UI and basic UI functions.
 
 ===setFormFieldMapping($array)===
 
+It defines form fields mapping.
+
 $array is a Key=>Value pairs where "Keys" are Name of Model Variable and "Values" are the field type of that variable.
 
 ====Example==== 
@@ -31,6 +33,8 @@ setFormFieldMapping("name"=>FormUI::FORM_FIELD_TEXTFIELD)
  where "name" is Model variable name and "FormUI::FORM_FIELD_TEXTFIELD" is its Field type i.e Textfield.
 
 ===setColumnNameMapping($array)===
+
+It defines column fields mapping.
 
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Column name to be displayed.
 
@@ -40,6 +44,8 @@ setColumnNameMapping("name"=>"Name of the candidate")
 
 ===setFormNameMap($array)===
 
+It defines type of form fields.
+
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Form name to be displayed.
 
 ====Example==== 
@@ -47,6 +53,8 @@ setFormNameMap("name"=>"Name of the candidate")
  where "name" is Model variable name and "Name of the candidate" is Form name to be displayed in UI.
 
 ===setColumnOrder($array)===
+
+It states the order of column.
 
 $array defines Key=>Value pair where "Keys" are Model Variable names and "Values" are display order of respective column.
 
