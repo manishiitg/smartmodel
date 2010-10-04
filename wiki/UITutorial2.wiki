@@ -14,13 +14,17 @@ $array in above Function takes key=>value pairs where keys are name of column to
 
 ====Example:====
 
-    setColumnMapping(array("id"=>"idname")); 
+    setColumnMapping(array("id"=>"statusfunction")); 
 
-    function idname($value) 
-
-    { } 
-
-where id=>idname is key value pair, id is column name to be mapped and idname is custom function name to be called.
+    function statusfunction($value){ 
+      If($value){
+       return "Yes";
+       }
+      else{
+        return "No";
+        }
+    } 
+where id=>idname is key value pair, id is column name to be mapped and idname is custom function name to be called."$value" is value of each row cell passed to the function, on the basis of "$value" value it returns "Yes or No".
 
 ===public function addCustomFilter($array){}===
 
