@@ -24,7 +24,7 @@ This section explains basic UI and basic UI functions.
 
 ===setFormFieldMapping($array)===
 
-It defines form fields mapping.
+It defines type of form fields.
 
 $array is a Key=>Value pairs where "Keys" are Name of Model Variable and "Values" are the field type of that variable.
 
@@ -44,7 +44,7 @@ setColumnNameMapping("name"=>"Name of the candidate")
 
 ===setFormNameMap($array)===
 
-It defines type of form fields.
+It defines form fields mapping.
 
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Form name to be displayed.
 
