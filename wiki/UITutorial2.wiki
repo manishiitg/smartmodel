@@ -6,7 +6,9 @@ This tutorial deals with custom Custom functions of UI.
 
 =Functions=
 
-===setColumnMapping($array)===
+===setColumnMapping($array)=== 
+
+It Adds Custom Column Mapping.
 
 ====Details:====
 
