@@ -8,7 +8,7 @@ This tutorial deals with custom Custom functions of UI.
 
 ===public function setColumnMapping($array){ }===
 
-Details:
+=====Details:=====
 
 $array in above Function takes key=>value pairs where keys are name of column to be mapped and values are function name to be mapped with it. Here function name specifies the function to be called for particular column.It takes value parameter for current row. This function can be used to display custom content and it returns the custom content in place of column name as an Array.
 
@@ -44,4 +44,4 @@ Example:
 
 $array=array('id'=>'Second Model name.id');
 
-AddModel?($array); In this example id=>Second Model name.id is a key value pair, id is Model Column name of First Model and Second Model name.id is second model column name.  
+AddModel($array); In this example id=>Second Model name.id is a key value pair, id is Model Column name of First Model and Second Model name.id is second model column name.  
