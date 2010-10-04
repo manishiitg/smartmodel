@@ -10,7 +10,7 @@ public function addCustomFilter($array){}
 
 = Details =
 
-$array takes key=>value pair where key is Db Column name and Value is name of variable to be passed similar to where clause condtion.
+$array takes key=>value pair where key is Model variable Column name and Value is name of variable to be passed similar to where clause condtion.
 
 =Example=
 
