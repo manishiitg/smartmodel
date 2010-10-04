@@ -15,7 +15,7 @@ This section explains basic UI and basic UI functions.
 #To actually display UI use following syntax: 
     $Ui->smartUI()
 
-#You have Successfully implemented UI of the Model.
+#You have successfully implemented UI of the Model.
 
 
 =Basic Functions of UI=
