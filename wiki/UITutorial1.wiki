@@ -52,6 +52,8 @@ Example: setColumnOrder(array('ModelName.ModelVariable'=>'1','Id'=>'2');
 
 Sets form encryption type.
 
-===setFormMethod("POST")===
+===setFormMethod()===
 
-Sets form method type. It can be Post or Get.
+Sets form method type. It can be "POST" or "GET".
+
+Example:setFormMethod("POST");
