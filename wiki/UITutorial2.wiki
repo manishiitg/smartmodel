@@ -8,7 +8,7 @@ This tutorial deals with custom Custom functions of UI.
 
 ===setColumnMapping($array)=== 
 
-It Adds Custom Column Mapping.
+Defines Custom Column Mapping.
 
 ====Details:====
 
@@ -30,6 +30,8 @@ where id=>idname is key value pair, id is column name to be mapped and idname is
 
 ===addCustomFilter($array){}===
 
+Add a Custom Filter.It is similar to where clause in sql query. 
+
 ====Details:====
 
 $array takes key=>value pair where key is Model variable Column name and Value is name of variable to be passed similar to where clause condtion. 
@@ -41,6 +43,8 @@ addCustomFilter(array( "id"=>"$variableid"));
 In this id=>$variableid pair "id" is name Db column name and "$variableid" is name of variable to be passed. 
 
 ===AddModel($array){}===
+
+Join two models in UI.It is similar to Default Inner Join in Sql Query.
 
 ====Details:====
 
