@@ -1,4 +1,4 @@
-#summary UI function-setColumnMapping
+#summary UI-Add Custom Column Mapping
 
 = Introduction =
 this tutorial explains Custom Column Mapping.
