@@ -79,8 +79,8 @@ This hides the column "id" and "firstname" while displaying other columns. Colum
 
 ===setDefaultURLParams($array)===
 
-It gets the value in URL in Hidden field. After page reloading retains the value of variable. 
+It sets the default parameters that will be send when the page is reloaded or submitted It retains the value of variable even after submiting or reloading page. 
 
 ====Details:====
 
-$array is key=>value pair, where key is Url variable and value is variable to be used as Hidden field.
+$array is key=>value pair, where "key" is Url variables and "value" is value of that parameter
