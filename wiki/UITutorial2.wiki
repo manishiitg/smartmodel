@@ -28,6 +28,15 @@ $array in above Function takes key=>value pairs where keys are name of column to
     } 
 where id=>idname is key value pair, id is column name to be mapped and idname is custom function name to be called."$value" is value of each row cell passed to the function, on the basis of "$value" value it returns "Yes or No".
 
+===setFormValueMapFunc($array){}===
+
+Defines Custom Form Mapping. It is similar to Column Mapping.
+
+====Details:====
+
+$array in above Function takes key=>value pairs where keys are name of form to be mapped and values are function name to be mapped with it. Here function name specifies the function to be called for particular form name.This function can be used to display custom content and it returns the custom content in place of form name as an Array.
+
+
 ===addCustomFilter($array){}===
 
 Add a Custom Filter.It is similar to where clause in sql query. 
