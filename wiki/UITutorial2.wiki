@@ -84,3 +84,9 @@ It sets the default parameters that will be send when the page is reloaded or su
 ====Details:====
 
 $array is key=>value pair, where "key" is Url variables and "value" is value of that parameter
+
+
+====Example:====
+
+setDefaultURLParams(array("websiteid"=>"$websiteid"));
+Here key "websiteid" is Url parameter, $websiteid is Value for Url parameter.
