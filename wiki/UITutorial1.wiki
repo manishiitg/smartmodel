@@ -26,28 +26,32 @@ This section explains basic UI and basic UI functions.
 
 $array is a Key=>Value pairs where "Keys" are Name of Model Variable and "Values" are the field type of that variable.
 
-====Example==== setFormFieldMapping("name"=>FormUI::FORM_FIELD_TEXTFIELD)
+====Example==== 
+setFormFieldMapping("name"=>FormUI::FORM_FIELD_TEXTFIELD)
  where "name" is Model variable name and "FormUI::FORM_FIELD_TEXTFIELD" is its Field type i.e Textfield.
 
 ===setColumnNameMapping($array)===
 
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Column name to be displayed.
 
-====Example==== setColumnNameMapping("name"=>"Name of the candidate")
+====Example==== 
+setColumnNameMapping("name"=>"Name of the candidate")
  where "name" is Model variable name and "Name of the candidate" is column name to be displayed in UI.
 
 ===setFormNameMap($array)===
 
 $array defines Key=>Value pair where "Keys" are Name of Model Variable and "Values" are the Form name to be displayed.
 
-====Example==== setFormNameMap("name"=>"Name of the candidate")
+====Example==== 
+setFormNameMap("name"=>"Name of the candidate")
  where "name" is Model variable name and "Name of the candidate" is Form name to be displayed in UI.
 
 ===setColumnOrder($array)===
 
 $array defines Key=>Value pair where "Keys" are Model Variable names and "Values" are display order of respective column.
 
-====Example==== setColumnOrder(array('ModelName.ModelVariable'=>'1','Id'=>'2');
+====Example==== 
+setColumnOrder(array('ModelName.ModelVariable'=>'1','Id'=>'2');
 
 ===setFormEnctype("multipart/form-data")===
 
@@ -57,4 +61,5 @@ Sets form encryption type.
 
 Sets form method type. It can be "POST" or "GET".
 
-====Example==== setFormMethod("POST");
+====Example==== 
+setFormMethod("POST");
