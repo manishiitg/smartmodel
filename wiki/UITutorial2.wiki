@@ -79,7 +79,7 @@ This hides the column "id" and "firstname" while displaying other columns. Colum
 
 ===setDefaultURLParams($array)===
 
-It sets the default parameters that will be send when the page is reloaded or submitted It retains the value of variable even after submiting or reloading page. 
+It sets the default parameters that will be send when the page is reloaded or submitted. It retains the value of variable even after submiting or reloading page. 
 
 ====Details:====
 
