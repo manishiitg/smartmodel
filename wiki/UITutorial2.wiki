@@ -76,3 +76,11 @@ This function is used to hide the columns which are not required by user.
 setHideColumn(array('id','firstname');
 
 This hides the column "id" and "firstname" while displaying other columns. Column names are Model variable names.
+
+===setDefaultURLParams($array)===
+
+It gets the value in URL in Hidden field. After page reloading retains the value of variable. 
+
+====Details:====
+
+$array is key=>value pair, where key is Url variable and value is variable to be used as Hidden field.
